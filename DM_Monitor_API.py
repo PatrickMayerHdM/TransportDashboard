@@ -1,5 +1,7 @@
 import requests
 from datetime import datetime
+import pytz
+
 
 def get_departures(name_dm, limit=10):
     # Aktuelle Uhrzeit im Format HHMM
@@ -31,18 +33,36 @@ def get_departures(name_dm, limit=10):
     # Antwort verarbeiten
     if response.status_code == 200:
         data = response.json()
+        print(data)
         departures = []
+        utc_tz = pytz.utc
+        local_tz = pytz.timezone("Europe/Berlin")
+
         for event in data.get("stopEvents", []):
             # Zeit und Transportdetails abrufen
             planned_time = event.get("departureTimePlanned", "Unbekannt")
-            actual_time = event.get("departureTimeActual") or event.get("departureTimeEstimated", "Unbekannt")  # Echtzeit oder geschätzte Zeit
-            time = planned_time[11:16] if planned_time != "Unbekannt" else "Unbekannt"  # HH:MM Format
+            actual_time = event.get("departureTimeActual") or event.get("departureTimeEstimated", "Unbekannt")
             line = event["transportation"]["name"]
             destination = event["transportation"]["destination"]["name"]
+            operator_name = event["transportation"]["operator"]["name"]  # Betreiberinformationen
 
-            # Überprüfen, ob die Abfahrt in der Zukunft liegt
-            if planned_time >= current_time:  # Vergleiche mit der aktuellen Zeit
-                departures.append((time, line, destination, actual_time[11:16] if actual_time else "Unbekannt"))  # Echtzeit oder geschätzte Zeit hinzufügen
+            # Zeitumrechnung von UTC zu lokaler Zeit
+            if planned_time != "Unbekannt":
+                dt_utc = datetime.strptime(planned_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=utc_tz)
+                planned_time_local = dt_utc.astimezone(local_tz).strftime("%H:%M")
+            else:
+                planned_time_local = "Unbekannt"
+
+            if actual_time and actual_time != "Unbekannt":
+                dt_utc = datetime.strptime(actual_time, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=utc_tz)
+                actual_time_local = dt_utc.astimezone(local_tz).strftime("%H:%M")
+            else:
+                actual_time_local = "Unbekannt"
+
+            # Hinweise sammeln
+            hints = [hint["content"] for hint in event.get("hints", [])]
+
+            departures.append((planned_time_local, actual_time_local, line, destination, operator_name, hints))
 
         return departures[:limit]  # Gibt nur die gewünschte Anzahl an Abfahrten zurück
     else:

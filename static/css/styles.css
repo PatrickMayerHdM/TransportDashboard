@@ -27,6 +27,7 @@ th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #252627;
+    width: 5%;
 }
 
 th {
@@ -38,7 +39,11 @@ tr:hover {
     background-color: #904e55;
 }
 
-
 button:hover {
     background-color: #904e55;
+}
+
+.red {
+    color: #904e55;
+    font-weight: bold;
 }

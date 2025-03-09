@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Liste von Haltestellen mit Limits
 stations = {
     "Sulzgries Bergstraße (Richtung Esslingen)": ("de:08116:4118:0:4", 3),
-    "Esslingen (N) Gleis 2/3": ("de:08116:7800:1", 3),
+    "Esslingen (N) Gleis 2/3": ("de:08116:7800:1", 4),
     "Esslingen (N) Gleis 7/8": ("de:08116:7800:3", 3),
     "Sulzgries Maienwalterstraße (Richtung Esslingen)": ("de:08116:4112:0:4", 1),
 
