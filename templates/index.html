@@ -12,13 +12,15 @@
             <h2>Abfahrten von {{ station }}</h2>
             <table>
                 <tr>
-                    <th>Zeit</th>
+                    <th>Plan-Zeit</th>
+                    <th>Ist-Zeit</th>
                     <th>Linie</th>
                     <th>Ziel</th>
                 </tr>
                 {% for departure in departures %}
                 <tr>
                     <td>{{ departure[0] }}</td>
+                    <td>{{ departure[3] }}</td>
                     <td>{{ departure[1] }}</td>
                     <td>{{ departure[2] }}</td>
                 </tr>

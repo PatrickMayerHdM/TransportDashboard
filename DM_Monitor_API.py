@@ -1,5 +1,3 @@
-# DM_Monitor_API.py
-
 import requests
 from datetime import datetime
 
@@ -21,7 +19,7 @@ def get_departures(name_dm, limit=10):
         'useAllStops': '1',  # sollte enthalten sein
         'useRealtime': '1',  # aktiviert Echtzeit
         'useProxFootSearch': '0',  # sollte enthalten sein - keine alternativen Haltestellen
-        'limit': str(limit)
+        'limit': limit  # Limit für die API-Anfrage
     }
     headers = {
         "User-Agent": "Mozilla/5.0"
@@ -35,10 +33,17 @@ def get_departures(name_dm, limit=10):
         data = response.json()
         departures = []
         for event in data.get("stopEvents", []):
-            time = event.get("departureTimePlanned", "Unbekannt")[11:16]
+            # Zeit und Transportdetails abrufen
+            planned_time = event.get("departureTimePlanned", "Unbekannt")
+            actual_time = event.get("departureTimeActual") or event.get("departureTimeEstimated", "Unbekannt")  # Echtzeit oder geschätzte Zeit
+            time = planned_time[11:16] if planned_time != "Unbekannt" else "Unbekannt"  # HH:MM Format
             line = event["transportation"]["name"]
             destination = event["transportation"]["destination"]["name"]
-            departures.append((time, line, destination))
-        return departures
+
+            # Überprüfen, ob die Abfahrt in der Zukunft liegt
+            if planned_time >= current_time:  # Vergleiche mit der aktuellen Zeit
+                departures.append((time, line, destination, actual_time[11:16] if actual_time else "Unbekannt"))  # Echtzeit oder geschätzte Zeit hinzufügen
+
+        return departures[:limit]  # Gibt nur die gewünschte Anzahl an Abfahrten zurück
     else:
         return []
