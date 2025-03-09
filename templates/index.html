@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abfahrten</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Abfahrten</h1>
-
     {% if all_departures %}
         {% for station, departures in all_departures.items() %}
             <h2>Abfahrten von {{ station }}</h2>
-            <table border="1">
+            <table>
                 <tr>
                     <th>Zeit</th>
                     <th>Linie</th>

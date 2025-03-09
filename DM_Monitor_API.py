@@ -3,7 +3,7 @@
 import requests
 from datetime import datetime
 
-def get_departures(name_dm):
+def get_departures(name_dm, limit=10):
     # Aktuelle Uhrzeit im Format HHMM
     current_time = datetime.now().strftime("%H%M")
 
@@ -21,7 +21,7 @@ def get_departures(name_dm):
         'useAllStops': '1',  # sollte enthalten sein
         'useRealtime': '1',  # aktiviert Echtzeit
         'useProxFootSearch': '0',  # sollte enthalten sein - keine alternativen Haltestellen
-        'limit': '10'
+        'limit': str(limit)
     }
     headers = {
         "User-Agent": "Mozilla/5.0"

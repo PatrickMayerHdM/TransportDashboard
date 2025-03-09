@@ -1,0 +1,44 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2efe9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #252627;
+}
+
+h2 {
+    color: #904e55;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4px 0;
+    background-color: #bfb48f;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #904e55;
+    color: white;
+}
+
+tr:hover {
+    background-color: #904e55;
+}
+
+
+button:hover {
+    background-color: #904e55;
+}
