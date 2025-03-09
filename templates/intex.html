@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abfahrten</title>
+</head>
+<body>
+    <h1>Abfahrten von Sulzgries Bergstraße</h1>
+    <table border="1">
+        <tr>
+            <th>Zeit</th>
+            <th>Linie</th>
+            <th>Ziel</th>
+        </tr>
+        {% for departure in departures %}
+        <tr>
+            <td>{{ departure[0] }}</td>
+            <td>{{ departure[1] }}</td>
+            <td>{{ departure[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
