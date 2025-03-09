@@ -1,6 +1,5 @@
-
 from flask import Flask, render_template
-from DM_Monitor_API import get_departures
+from DM_Monitor_API import get_departures  # Stelle sicher, dass der Import korrekt ist
 
 app = Flask(__name__)
 
