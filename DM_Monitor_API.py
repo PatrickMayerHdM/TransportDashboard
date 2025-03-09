@@ -1,8 +1,9 @@
+# DM_Monitor_API.py
+
 import requests
 from datetime import datetime
 
-
-def get_departures():
+def get_departures(name_dm):
     # Aktuelle Uhrzeit im Format HHMM
     current_time = datetime.now().strftime("%H%M")
 
@@ -11,15 +12,15 @@ def get_departures():
     params = {
         'commonMacro': 'dm',
         'type_dm': 'any',
-        'name_dm': 'de:08116:4118',  # Sulzgries Bergstraße
+        'name_dm': name_dm,  # Übergabe der Haltestelle
         'itdTime': current_time,  # Aktuelle Uhrzeit statt fester Zeit
         'outputFormat': 'rapidJSON',
         'coordOutputFormat': 'WGS84[dd.ddddd]',
         'locationServerActive': '1',
-        'mode': 'direct', # should be included
-        'useAllStops': '1', # should be included
-        'useRealtime': '1', # activates real time
-        'useProxFootSearch': '0', # should be included - no alternative stops
+        'mode': 'direct',  # sollte enthalten sein
+        'useAllStops': '1',  # sollte enthalten sein
+        'useRealtime': '1',  # aktiviert Echtzeit
+        'useProxFootSearch': '0',  # sollte enthalten sein - keine alternativen Haltestellen
         'limit': '10'
     }
     headers = {
@@ -41,7 +42,3 @@ def get_departures():
         return departures
     else:
         return []
-
-
-if __name__ == "__main__":
-    print(get_departures())  # Teste den Abruf, wenn die Datei direkt ausgeführt wird

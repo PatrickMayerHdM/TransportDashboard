@@ -6,20 +6,26 @@
     <title>Abfahrten</title>
 </head>
 <body>
-    <h1>Abfahrten von Sulzgries Bergstraße</h1>
-    <table border="1">
-        <tr>
-            <th>Zeit</th>
-            <th>Linie</th>
-            <th>Ziel</th>
-        </tr>
-        {% for departure in departures %}
-        <tr>
-            <td>{{ departure[0] }}</td>
-            <td>{{ departure[1] }}</td>
-            <td>{{ departure[2] }}</td>
-        </tr>
+    <h1>Abfahrten</h1>
+
+    {% if all_departures %}
+        {% for station, departures in all_departures.items() %}
+            <h2>Abfahrten von {{ station }}</h2>
+            <table border="1">
+                <tr>
+                    <th>Zeit</th>
+                    <th>Linie</th>
+                    <th>Ziel</th>
+                </tr>
+                {% for departure in departures %}
+                <tr>
+                    <td>{{ departure[0] }}</td>
+                    <td>{{ departure[1] }}</td>
+                    <td>{{ departure[2] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
         {% endfor %}
-    </table>
+    {% endif %}
 </body>
 </html>
